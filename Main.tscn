@@ -6,16 +6,21 @@
 [ext_resource path="res://Player.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Enemy.tscn" type="PackedScene" id=5]
 
-
 [sub_resource type="Gradient" id=3]
 
 offsets = PoolRealArray( -7.379e+034, 0, 1 )
 colors = PoolColorArray( 0.101563, 0.101563, 0.101563, 1, 0, 0, 0, 1, 0.00830078, 0.0101242, 0.125, 1 )
 
 [sub_resource type="GradientTexture" id=2]
-gradient = SubResource( 1 )
 
-[sub_resource type="ParticlesMaterial" id=3]
+flags = 4
+gradient = SubResource( 3 )
+width = 2048
+
+[sub_resource type="ParticlesMaterial" id=1]
+
+render_priority = 0
+trail_divisor = 1
 emission_shape = 2
 emission_box_extents = Vector3( 1, 1, 90 )
 flag_align_y = false
@@ -27,6 +32,7 @@ gravity = Vector3( 0, 0, 0 )
 initial_velocity = 0.0
 initial_velocity_random = 0.0
 angular_velocity = 0.0
+angular_velocity_random = 0.0
 orbit_velocity = 0.0
 orbit_velocity_random = 0.0
 linear_accel = 50.0
@@ -40,10 +46,10 @@ damping_random = 0.0
 angle = 0.0
 angle_random = 0.0
 scale = 4.0
+scale_random = 0.0
 color = Color( 0.878906, 0.871181, 0.75531, 1 )
 hue_variation = 0.4
 hue_variation_random = 0.02
-
 anim_speed = 0.0
 anim_speed_random = 0.0
 anim_offset = 0.0
@@ -76,12 +82,10 @@ script = ExtResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="." index="0"]
 
-[node name="Sprite" type="Sprite" parent="."]
 show_behind_parent = true
 position = Vector2( 1098.13, 0 )
 scale = Vector2( 2.07239, 2990.09 )
 texture = SubResource( 2 )
-
 _sections_unfolded = [ "Animation", "Offset", "Region", "Visibility" ]
 
 [node name="Particles2D" type="Particles2D" parent="." index="1"]
@@ -133,14 +137,30 @@ _sections_unfolded = [ "Collision", "Transform", "Visibility" ]
 
 [node name="announcementLabel" type="Label" parent="." index="5"]
 
-[node name="announcementLabel" type="Label" parent="."]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
 margin_right = 40.0
 margin_bottom = 14.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
 
 [node name="Enemy" parent="." index="6" instance=ExtResource( 5 )]
 
 [connection signal="start_game" from="RootMenu" to="." method="_on_RootMenu_start_game"]
 
 [connection signal="timeout" from="enemyTimer" to="." method="_on_enemyTimer_timeout"]
+
 [connection signal="grab" from="Player" to="." method="_on_Player_grab"]
+
 [connection signal="throw" from="Player" to="." method="_on_Player_throw"]
+
+
