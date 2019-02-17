@@ -16,7 +16,7 @@ prev = 0
 
 async def themasterpiece(websocket, path):
     command = await websocket.recv() # wait for the request
-    print("command recieved from "+ websocket, path)
+    print("command recieved from "+ str(path))
     for i in range (4):
 	    WAVE_OUTPUT_FILENAME = "output_"+str(i)+".wav"
 	    p = pyaudio.PyAudio()
@@ -26,7 +26,7 @@ async def themasterpiece(websocket, path):
 	                input=True,
 	                frames_per_buffer=CHUNK)
 	    frames = []
-	    for _in range(0, int(RATE / CHUNK * RECORD_SECONDS)):
+	    for _ in range(0, int(RATE / CHUNK * RECORD_SECONDS)):
 	        data = stream.read(CHUNK)
 	        frames.append(data)
 	    stream.stop_stream()
@@ -46,16 +46,15 @@ async def themasterpiece(websocket, path):
 	    	pass
 	    elif (np.argmax(str_fft) > prev+12):
 	        print('up')
-	        websocket.send('up')
+	        await websocket.send('up')
 	    elif (np.argmax(str_fft) < prev - 12):
 	        print('down')
-	        websocket.send('down')		
+	        await websocket.send('down')		
 	    else:
 	        print('no change')
-	        websocket.send('no change')
+	        await websocket.send('no change')
 	    prev = np.argmax(str_fft)
-	p.terminate()
-    await websocket.send(greeting)
+	    p.terminate()
 
 backend_server = websockets.serve(themasterpiece, 'localhost', 6969)
 
