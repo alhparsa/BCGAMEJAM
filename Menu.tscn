@@ -1,0 +1,92 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://scripts/Menu.gd" type="Script" id=1]
+[ext_resource path="res://Images/Cosmic Sumos.png" type="Texture" id=2]
+[ext_resource path="res://Images/sumo.png" type="Texture" id=3]
+[ext_resource path="res://Images/New Game.png" type="Texture" id=4]
+[ext_resource path="res://Images/Highscores.png" type="Texture" id=5]
+[ext_resource path="res://Images/Gameplay.png" type="Texture" id=6]
+[ext_resource path="res://Images/Exit.png" type="Texture" id=7]
+[ext_resource path="res://Images/Selection.png" type="Texture" id=8]
+
+[node name="RootMenu" type="Node2D"]
+
+script = ExtResource( 1 )
+_sections_unfolded = [ "Margin", "Material", "Pause", "Rect", "Transform", "Visibility", "Z Index", "custom_constants" ]
+
+[node name="Cosmic Sumos" type="Sprite" parent="." index="0"]
+
+position = Vector2( 60, 0 )
+texture = ExtResource( 2 )
+centered = false
+_sections_unfolded = [ "Animation", "Material", "Offset", "Pause", "Rect", "Region", "Transform", "Visibility" ]
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sumo Logo" type="Sprite" parent="." index="1"]
+
+position = Vector2( 625, 200 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 3 )
+centered = false
+_sections_unfolded = [ "Animation", "Margin", "Material", "Offset", "Rect", "Region", "Transform", "Visibility", "Z Index" ]
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="New Game" type="Sprite" parent="." index="2"]
+
+position = Vector2( 100, 250 )
+scale = Vector2( 0.75, 0.75 )
+texture = ExtResource( 4 )
+centered = false
+_sections_unfolded = [ "Offset", "Rect", "Transform" ]
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="HighScores" type="Sprite" parent="." index="3"]
+
+position = Vector2( 100, 325 )
+scale = Vector2( 0.75, 0.75 )
+texture = ExtResource( 5 )
+centered = false
+_sections_unfolded = [ "Offset", "Rect", "Transform" ]
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Gameplay" type="Sprite" parent="." index="4"]
+
+position = Vector2( 100, 400 )
+scale = Vector2( 0.75, 0.75 )
+texture = ExtResource( 6 )
+centered = false
+_sections_unfolded = [ "Offset", "Rect", "Transform" ]
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Exit" type="Sprite" parent="." index="5"]
+
+position = Vector2( 100, 475 )
+scale = Vector2( 0.75, 0.75 )
+texture = ExtResource( 7 )
+centered = false
+_sections_unfolded = [ "Offset", "Rect", "Transform" ]
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Selection" type="Sprite" parent="." index="6"]
+
+position = Vector2( 25, 230 )
+texture = ExtResource( 8 )
+centered = false
+_sections_unfolded = [ "Animation", "Material", "Offset", "Pause", "Region", "Transform", "Visibility", "Z Index" ]
+__meta__ = {
+"_edit_group_": true
+}
+
+

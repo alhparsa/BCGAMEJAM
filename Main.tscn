@@ -1,13 +1,15 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://scripts/Main.gd" type="Script" id=1]
-[ext_resource path="res://Enemy.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Player.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Menu.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Background.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Player.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Enemy.tscn" type="PackedScene" id=5]
 
 [sub_resource type="Gradient" id=3]
 
-offsets = PoolRealArray( -7.379e+034 )
-colors = PoolColorArray( 0.101563, 0.101563, 0.101563, 1 )
+offsets = PoolRealArray( -7.379e+034, 0, 1 )
+colors = PoolColorArray( 0.101563, 0.101563, 0.101563, 1, 0, 0, 0, 1, 0.00830078, 0.0101242, 0.125, 1 )
 
 [sub_resource type="GradientTexture" id=2]
 
@@ -20,22 +22,22 @@ width = 2048
 render_priority = 0
 trail_divisor = 1
 emission_shape = 2
-emission_box_extents = Vector3( 20000, 10000, 0 )
+emission_box_extents = Vector3( 1, 1, 90 )
 flag_align_y = false
-flag_rotate_y = false
+flag_rotate_y = true
 flag_disable_z = true
-spread = 45.0
+spread = 100.0
 flatness = 0.0
 gravity = Vector3( 0, 0, 0 )
-initial_velocity = 1.0
+initial_velocity = 0.0
 initial_velocity_random = 0.0
 angular_velocity = 0.0
 angular_velocity_random = 0.0
 orbit_velocity = 0.0
 orbit_velocity_random = 0.0
-linear_accel = 0.0
+linear_accel = 50.0
 linear_accel_random = 0.0
-radial_accel = 0.0
+radial_accel = 100.0
 radial_accel_random = 0.0
 tangential_accel = 0.0
 tangential_accel_random = 0.0
@@ -55,19 +57,30 @@ anim_offset_random = 0.0
 anim_loop = false
 _sections_unfolded = [ "Angle", "Angular Velocity", "Animation", "Color", "Damping", "Emission Shape", "Flags", "Gravity", "Hue Variation", "Initial Velocity", "Linear Accel", "Orbit Velocity", "Radial Accel", "Scale", "Spread", "Tangential Accel", "Trail" ]
 
+[sub_resource type="GDScript" id=4]
+
+script/source = "extends Particles2D
+
+# class member variables go here, for example:
+# var a = 2
+# var b = \"textvar\"
+
+func _ready():
+	# Called when the node is added to the scene for the first time.
+	# Initialization here
+	pass
+
+#func _process(delta):
+#	# Called every frame. Delta is time since last frame.
+#	# Update game logic here.
+#	pass
+"
+
 [node name="Main" type="Node" index="0"]
 
 script = ExtResource( 1 )
-Enemy = ExtResource( 2 )
 
-[node name="enemyTimer" type="Timer" parent="." index="0"]
-
-process_mode = 1
-wait_time = 1.0
-one_shot = true
-autostart = false
-
-[node name="Sprite" type="Sprite" parent="." index="1"]
+[node name="Sprite" type="Sprite" parent="." index="0"]
 
 show_behind_parent = true
 position = Vector2( 1098.13, 0 )
@@ -75,20 +88,20 @@ scale = Vector2( 2.07239, 2990.09 )
 texture = SubResource( 2 )
 _sections_unfolded = [ "Animation", "Offset", "Region", "Visibility" ]
 
-[node name="Particles2D" type="Particles2D" parent="." index="2"]
+[node name="Particles2D" type="Particles2D" parent="." index="1"]
 
-position = Vector2( 1122.38, 601.106 )
+position = Vector2( 947.363, 211.69 )
 emitting = true
-amount = 50
-lifetime = 0.05
+amount = 100
+lifetime = 14.0
 one_shot = false
 preprocess = 0.0
-speed_scale = 0.77
+speed_scale = 1.0
 explosiveness = 0.0
-randomness = 1.0
+randomness = 0.73
 fixed_fps = 0
 fract_delta = true
-visibility_rect = Rect2( -100, -100, 200, 200 )
+visibility_rect = Rect2( -100, -500, 200, 700 )
 local_coords = true
 draw_order = 0
 process_material = SubResource( 1 )
@@ -96,15 +109,33 @@ texture = null
 normal_map = null
 h_frames = 1
 v_frames = 1
+script = SubResource( 4 )
 _sections_unfolded = [ "Drawing", "Process Material", "Textures", "Time" ]
 
-[node name="Player" parent="." index="3" instance=ExtResource( 3 )]
+[node name="RootMenu" parent="." index="2" instance=ExtResource( 2 )]
 
-position = Vector2( 859.479, 606.717 )
+position = Vector2( 400, 220 )
+
+[node name="Background" parent="RootMenu" index="7" instance=ExtResource( 3 )]
+
+visible = false
+position = Vector2( -190, -70 )
+_sections_unfolded = [ "Transform", "Visibility" ]
+
+[node name="enemyTimer" type="Timer" parent="." index="3"]
+
+process_mode = 1
+wait_time = 1.0
+one_shot = true
+autostart = false
+
+[node name="Player" parent="." index="4" instance=ExtResource( 4 )]
+
+position = Vector2( -126.86, 377.256 )
 scale = Vector2( 2, 2 )
 _sections_unfolded = [ "Collision", "Transform", "Visibility" ]
 
-[node name="announcementLabel" type="Label" parent="." index="4"]
+[node name="announcementLabel" type="Label" parent="." index="5"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -121,6 +152,10 @@ size_flags_vertical = 4
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
+
+[node name="Enemy" parent="." index="6" instance=ExtResource( 5 )]
+
+[connection signal="start_game" from="RootMenu" to="." method="_on_RootMenu_start_game"]
 
 [connection signal="timeout" from="enemyTimer" to="." method="_on_enemyTimer_timeout"]
 

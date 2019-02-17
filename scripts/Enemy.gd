@@ -14,21 +14,22 @@ var grabshake = 0;
 var enemyType = "cameron";
 var thrownStr;
 var screensize;
+signal enemy_death;
 
 func _ready():
-	# Called when the node is added to the scene for the first time.
-	# Initialization here
-	state = "hidden"
-	
-	spin = 0;
-	$Hurtbox.hide();
-	#send_in();
-	enemyType = ["cameron","parsak","ari"][randi()%3];
-	#hide();
 	screensize = get_viewport_rect().size;
-	origPos.y = -200;
+	origPos.y = 175;
 	origPos.x = screensize.x/2;
+	reset();
+
+func reset():
+	state = "hidden"
+	$Hurtbox.hide();
+	enemyType = ["cameron","parsak","ari"][randi()%3];
+	scale.x = 0;
+	scale.y = 0;
 	position = origPos;
+	
 
 func _process(delta):
 	timer = (timer + delta);
@@ -43,8 +44,9 @@ func _process(delta):
 			if(vel.length() > 0):
 				vel = vel.normalized() * speed;
 			position += vel * delta;
-			scale.x = 0.2 + position.y/800;
-			scale.y = 0.2 + position.y/800;
+			scale.x = (position.y-175)/400;
+			scale.y = scale.x;
+			
 	if state == "grabbed":
 		if int(timer*20)%2 == 0:
 			if(grabshake==1):
@@ -60,8 +62,9 @@ func _process(delta):
 	if state == "thrown":
 		position.x += thrownStr * delta;
 		rotate(thrownStr*0.1*delta);
-		if(position.x < -100 or position.x > 800):
-			print("death/reset/ehhhh");
+		if(position.x < -100 or position.x > screensize.x+100):
+			reset();
+			emit_signal("enemy_death");
 		
 		
 		
@@ -99,7 +102,7 @@ func idle():
 	$hurtDelay.start();
 	
 func thrown(throwStr):
-	scale.x = 0.7;
+	scale.x *= 2;
 	state = "thrown";
 	thrownStr = throwStr;
 	$Hurtbox.hide();
