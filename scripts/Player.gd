@@ -7,6 +7,7 @@ var state = "ready"; #ready, attack, retreat, grab
 var attackPos = Vector2();
 var grabTimer;
 var throwstr = 0;
+var screensize;
 export (int) var speed;
 export (Vector2) var origPos;
 signal grab;
@@ -15,6 +16,10 @@ signal throw;
 func _ready():
 	# Called when the node is added to the scene for the first time.
 	# Initialization here
+	
+	screensize = get_viewport_rect().size;
+	origPos.x = screensize.x / 2;
+	origPos.y = screensize.y - 50;
 	position = origPos;
 
 

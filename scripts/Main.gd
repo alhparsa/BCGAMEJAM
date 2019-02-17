@@ -14,14 +14,13 @@ func _ready():
 	score = 0;
 	$enemyTimer.start();
 
-#func _process(delta):
-#	# Called every frame. Delta is time since last frame.
-#	# Update game logic here.
-#	pass
+func _process(delta):
+	if Input.is_action_pressed("ui_cancel"):
+		get_tree().quit();
 
 
 func _on_Player_grab():
-	if ($Player.position-0.25*$Enemy/Hurtbox.position-$Enemy.position).length() <= 75:
+	if $Enemy.isinhurtbox($Player.position):
 		$Enemy.grabbed();
 	#	$UDP._sumo()
 		$Player.start_throw();

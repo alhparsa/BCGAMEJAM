@@ -138,6 +138,7 @@ shape = SubResource( 3 )
 scale = Vector2( 0.3, 0.3 )
 frames = SubResource( 4 )
 animation = "default"
+frame = 1
 playing = true
 _sections_unfolded = [ "Transform" ]
 
