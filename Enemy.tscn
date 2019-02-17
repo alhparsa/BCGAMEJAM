@@ -1,0 +1,153 @@
+[gd_scene load_steps=26 format=2]
+
+[ext_resource path="res://scripts/Enemy.gd" type="Script" id=1]
+[ext_resource path="res://Images/cameron-sad.png" type="Texture" id=2]
+[ext_resource path="res://Images/cameron-sad  flip.png" type="Texture" id=3]
+[ext_resource path="res://Images/parsa-k-combat1.png" type="Texture" id=4]
+[ext_resource path="res://Images/parsa-k-combat1 flip.png" type="Texture" id=5]
+[ext_resource path="res://Images/ari-sad.png" type="Texture" id=6]
+[ext_resource path="res://Images/ari-sad flip.png" type="Texture" id=7]
+[ext_resource path="res://Images/cameron-happy.png" type="Texture" id=8]
+[ext_resource path="res://Images/cameron-happy  flip .png" type="Texture" id=9]
+[ext_resource path="res://Images/cameron-combat.png" type="Texture" id=10]
+[ext_resource path="res://Images/cameron-combat  flip.png" type="Texture" id=11]
+[ext_resource path="res://Images/ari-combat.png" type="Texture" id=12]
+[ext_resource path="res://Images/ari-combat_flip.png" type="Texture" id=13]
+[ext_resource path="res://Images/parsa-k-happy2.png" type="Texture" id=14]
+[ext_resource path="res://Images/parsa-k-happy2 flip.png" type="Texture" id=15]
+[ext_resource path="res://Images/parsa-k-sad flip.png" type="Texture" id=16]
+[ext_resource path="res://Images/parsa-k-sad.png" type="Texture" id=17]
+[ext_resource path="res://Images/ari-happy.png" type="Texture" id=18]
+[ext_resource path="res://Images/ari-happy flip.png" type="Texture" id=19]
+[ext_resource path="res://Images/pixil-frame-0.png" type="Texture" id=20]
+[ext_resource path="res://Images/pixil-frame-1.png" type="Texture" id=21]
+
+[sub_resource type="SpriteFrames" id=1]
+
+animations = [ {
+"frames": [ ExtResource( 2 ), ExtResource( 3 ) ],
+"loop": true,
+"name": "cameron_sad",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 4 ), ExtResource( 5 ) ],
+"loop": true,
+"name": "parsak_combat",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 6 ), ExtResource( 7 ) ],
+"loop": true,
+"name": "ari_sad",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 8 ), ExtResource( 9 ) ],
+"loop": true,
+"name": "cameron_happy",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 10 ), ExtResource( 11 ) ],
+"loop": true,
+"name": "cameron_combat",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 12 ), ExtResource( 13 ) ],
+"loop": true,
+"name": "ari_combat",
+"speed": 4.89
+}, {
+"frames": [ ExtResource( 14 ), ExtResource( 15 ) ],
+"loop": true,
+"name": "parsak_happy",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 16 ), ExtResource( 17 ) ],
+"loop": true,
+"name": "parsak_sad",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 18 ), ExtResource( 19 ) ],
+"loop": true,
+"name": "ari_happy",
+"speed": 5.0
+} ]
+
+[sub_resource type="CapsuleShape2D" id=2]
+
+custom_solver_bias = 0.0
+radius = 156.471
+height = 513.501
+
+[sub_resource type="CircleShape2D" id=3]
+
+custom_solver_bias = 0.0
+radius = 75.1987
+
+[sub_resource type="SpriteFrames" id=4]
+
+animations = [ {
+"frames": [ ExtResource( 20 ), ExtResource( 21 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[node name="Enemy" type="KinematicBody2D"]
+
+position = Vector2( 538.605, 288.892 )
+scale = Vector2( 0.25, 0.25 )
+input_pickable = false
+collision_layer = 1
+collision_mask = 1
+collision/safe_margin = 0.08
+script = ExtResource( 1 )
+_sections_unfolded = [ "Transform" ]
+__meta__ = {
+"_edit_group_": true
+}
+origPos = Vector2( 512, -100 )
+speed = 400
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="." index="0"]
+
+scale = Vector2( 0.75, 0.75 )
+frames = SubResource( 1 )
+animation = "ari_sad"
+_sections_unfolded = [ "Transform" ]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." index="1"]
+
+shape = SubResource( 2 )
+
+[node name="Hurtbox" type="Area2D" parent="." index="2"]
+
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+audio_bus_override = false
+audio_bus_name = "Master"
+_sections_unfolded = [ "Transform" ]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" index="0"]
+
+shape = SubResource( 3 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="Hurtbox" index="1"]
+
+scale = Vector2( 0.3, 0.3 )
+frames = SubResource( 4 )
+animation = "default"
+playing = true
+_sections_unfolded = [ "Transform" ]
+
+[node name="hurtDelay" type="Timer" parent="." index="3"]
+
+process_mode = 1
+wait_time = 0.25
+one_shot = true
+autostart = false
+
+[connection signal="timeout" from="hurtDelay" to="." method="_on_hurtDelay_timeout"]
+
+

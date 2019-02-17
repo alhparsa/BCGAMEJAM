@@ -14,6 +14,10 @@ config/name="twoParsas"
 run/main_scene="res://Main.tscn"
 config/icon="res://icon.png"
 
+[gdnative]
+
+singletons=[ "res://scripts/pythonscript.gdnlib" ]
+
 [rendering]
 
 environment/default_environment="res://default_env.tres"
