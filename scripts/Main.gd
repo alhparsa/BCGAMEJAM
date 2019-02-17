@@ -4,15 +4,13 @@ extends Node
 # var a = 2
 # var b = "textvar"
 
-export (PackedScene) var Enemy;
+#export (PackedScene) var Enemy;
 var score;
 
 func _ready():
 	# Called when the node is added to the scene for the first time.
 	# Initialization here
 	randomize();
-	score = 0;
-	$enemyTimer.start();
 
 func _process(delta):
 	if Input.is_action_pressed("ui_cancel"):
@@ -40,6 +38,10 @@ func _on_Player_throw():
 		$Enemy.idle();
 
 func _on_enemyTimer_timeout():
-	var mob = Enemy.instance();
-	add_child(mob);
-	mob.send_in();
+	$Enemy.reset();
+	$Enemy.send_in();
+
+
+func _on_RootMenu_start_game():
+	score = 0;
+	$enemyTimer.start();
